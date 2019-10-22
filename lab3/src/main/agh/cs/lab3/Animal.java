@@ -4,6 +4,9 @@ public class Animal {
 
     private MapDirection orientation;
     private Vector2d position;
+    Vector2d minVector = new Vector2d(0,0);
+    Vector2d maxVector = new Vector2d(4,4);
+    Vector2d tmp = null;
 
     public Animal(){
         this.orientation = MapDirection.NORTH;
@@ -27,17 +30,17 @@ public class Animal {
         for(MoveDirection direction : directions){
             switch(direction){
                 case RIGHT:
-                    this.orientation = MapDirection.EAST;
+                    this.orientation = (this.orientation.next());
                     System.out.println(this.toString());
                     break;
                 case LEFT:
-                    this.orientation = MapDirection.WEST;
+                    this.orientation = (this.orientation.previous());
                     System.out.println(this.toString());
                     break;
                 case FORWARD:
-                    this.orientation = MapDirection.NORTH;
-                    if(this.position.y != 4) {
-                        this.position = this.position.add(new Vector2d(0, 1));
+                    tmp = this.position.add(this.orientation.toUnitVector());
+                    if(tmp.follows(minVector) && tmp.precedes(maxVector)) {
+                        this.position = tmp;
                         System.out.println(this.toString());
                     }
                     else{
@@ -45,9 +48,9 @@ public class Animal {
                     }
                     break;
                 case BACKWARD:
-                    this.orientation = MapDirection.SOUTH;
-                    if(this.position.y != 0){
-                        this.position = this.position.add(new Vector2d(0,-1));
+                    tmp = this.position.subtract(this.orientation.toUnitVector());
+                    if(tmp.follows(minVector) && tmp.precedes(maxVector)){
+                        this.position = tmp;
                         System.out.println(this.toString());;
                     }
                     else{
