@@ -5,58 +5,58 @@ import org.junit.Test;
 
 public class AnimalTest {
     Animal duck = new Animal();
-    MoveDirection[] duckDirectionSouth = new MoveDirection[]{MoveDirection.BACKWARD};
-    MoveDirection[] duckDirectionEast = new MoveDirection[] {MoveDirection.RIGHT};
-    MoveDirection[] duckDirectionWest = new MoveDirection[] {MoveDirection.LEFT};
-    MoveDirection[] duckDirectionNorth = new MoveDirection[] {MoveDirection.FORWARD};
-    MoveDirection[] duckMoves = new MoveDirection[] {MoveDirection.BACKWARD, MoveDirection.BACKWARD, MoveDirection.LEFT};
+    MoveDirection[] duckBackward = new MoveDirection[]{MoveDirection.BACKWARD};
+    MoveDirection[] duckRight = new MoveDirection[] {MoveDirection.RIGHT};
+    MoveDirection[] duckLeft = new MoveDirection[] {MoveDirection.LEFT};
+    MoveDirection[] duckForward = new MoveDirection[] {MoveDirection.FORWARD};
+    MoveDirection[] duckMoves = new MoveDirection[] {MoveDirection.BACKWARD, MoveDirection.BACKWARD, MoveDirection.BACKWARD, MoveDirection.FORWARD, MoveDirection.BACKWARD, MoveDirection.LEFT};
     String[] toParse = new String[] {"f", "forward", "b", "backward", "l", "left", "r", "right", "test", "something"};
     OptionsParser parser = new OptionsParser();
 
     @Test
     public void orientationTest(){
         Assert.assertEquals(duck.getOrientation(),MapDirection.NORTH);
-        duck.move(duckDirectionSouth);
-        Assert.assertEquals(duck.getOrientation(),MapDirection.SOUTH);
-        duck.move(duckDirectionEast);
+        duck.move(duckBackward);
+        Assert.assertEquals(duck.getOrientation(),MapDirection.NORTH);
+        duck.move(duckRight);
         Assert.assertEquals(duck.getOrientation(),MapDirection.EAST);
-        duck.move(duckDirectionWest);
-        Assert.assertEquals(duck.getOrientation(),MapDirection.WEST);
+        duck.move(duckLeft);
+        Assert.assertEquals(duck.getOrientation(),MapDirection.NORTH);
+        duck.move(duckForward);
+        Assert.assertEquals(duck.getOrientation(),MapDirection.NORTH);
         duck.move(duckMoves);
         Assert.assertEquals(duck.getOrientation(),MapDirection.WEST);
-        duck.move(duckDirectionNorth);
-        Assert.assertEquals(duck.getOrientation(),MapDirection.NORTH);
     }
 
     @Test
     public void positionTest(){
         Assert.assertEquals(duck.getPosition(),new Vector2d(2,2));
-        duck.move(duckDirectionSouth);
+        duck.move(duckBackward);
         Assert.assertEquals(duck.getPosition(),new Vector2d(2,1));
-        duck.move(duckDirectionEast);
+        duck.move(duckRight);
         Assert.assertEquals(duck.getPosition(),new Vector2d(2,1));
-        duck.move(duckDirectionWest);
+        duck.move(duckLeft);
         Assert.assertEquals(duck.getPosition(),new Vector2d(2,1));
+        duck.move(duckForward);
+        Assert.assertEquals(duck.getPosition(),new Vector2d(2,2));
         duck.move(duckMoves);
         Assert.assertEquals(duck.getPosition(),new Vector2d(2,0));
-        duck.move(duckDirectionNorth);
-        Assert.assertEquals(duck.getPosition(),new Vector2d(2,1));
     }
 
     @Test
     public void offMapTest(){
         Assert.assertEquals(duck.getPosition(),new Vector2d(2,2));
-        duck.move(duckDirectionSouth);
-        duck.move(duckDirectionSouth);
-        duck.move(duckDirectionSouth);
-        duck.move(duckDirectionSouth);
-        duck.move(duckDirectionSouth);
+        duck.move(duckBackward);
+        duck.move(duckBackward);
+        duck.move(duckBackward);
+        duck.move(duckBackward);
+        duck.move(duckBackward);
         Assert.assertEquals(duck.getPosition(),new Vector2d(2,0));
-        duck.move(duckDirectionNorth);
-        duck.move(duckDirectionNorth);
-        duck.move(duckDirectionNorth);
-        duck.move(duckDirectionNorth);
-        duck.move(duckDirectionNorth);
+        duck.move(duckForward);
+        duck.move(duckForward);
+        duck.move(duckForward);
+        duck.move(duckForward);
+        duck.move(duckForward);
         Assert.assertEquals(duck.getPosition(),new Vector2d(2,4));
     }
 
