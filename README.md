@@ -1,1 +1,1 @@
-# oop
+programowanie obiektowe
